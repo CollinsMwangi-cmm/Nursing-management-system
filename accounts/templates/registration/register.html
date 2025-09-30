@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Register</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            min-width: 100vw;
+            display: grid;
+            place-items: center;
+            color: #333;
+            background:
+                linear-gradient(135deg, rgba(34,139,34,0.27) 0%, rgba(144,238,144,0.25) 100%),
+                linear-gradient(rgba(255,255,255,0.60), rgba(255,255,255,0.55)),
+                url("https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1500&q=80") center/cover no-repeat;
+        }
+
+        main {
+            width: 96vw;
+            max-width: 340px;
+            min-width: 0;
+            padding: 1.2rem 0.7rem 1rem 0.7rem;
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            max-height: 98vh;
+            overflow: hidden;
+        }
+
+        h1.welcome-message {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            color: #176a32;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 0 #c2f0c2;
+            width: 100%;
+            word-break: break-word;
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-fields {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            max-height: 46vh;
+            margin-bottom: 1rem;
+        }
+
+        form h2 {
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: #24552c;
+            width: 100%;
+            font-size: 1.12rem;
+            word-break: break-word;
+        }
+
+        .field-group {
+            margin-bottom: 0.85rem;
+            text-align: left;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            box-sizing: border-box;
+        }
+
+        .field-group label {
+            display: block;
+            margin-bottom: 0.22rem;
+            font-weight: 500;
+            color: #3c5f3c;
+            width: 100%;
+            font-size: 0.97rem;
+            word-break: break-word;
+        }
+
+        .field-group input,
+        .field-group select {
+            width: 100%;
+            min-width: 0;
+            padding: 0.46rem 0.65rem;
+            border: 1.5px solid #b3d9b3;
+            border-radius: 6px;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.90);
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+
+        .field-group input:focus,
+        .field-group select:focus {
+            border-color: #388e3c;
+            outline: none;
+            box-shadow: 0 0 5px rgba(56,142,60,0.14);
+        }
+
+        .field-error {
+            color: #d93025;
+            font-size: 0.91rem;
+            margin-top: 0.2rem;
+            width: 100%;
+            word-break: break-word;
+        }
+
+        .non-field-errors {
+            color: #d93025;
+            background-color: #fce8e6;
+            border: 1px solid #d93025;
+            padding: 0.65rem 0.7rem;
+            border-radius: 6px;
+            margin-bottom: 0.7rem;
+            text-align: left;
+            font-size: 0.95rem;
+            list-style-type: none;
+            width: 100%;
+            box-sizing: border-box;
+            word-break: break-word;
+        }
+
+        form button {
+            width: 100%;
+            background: linear-gradient(90deg, #379634 60%, #55b957 100%);
+            color: white;
+            border: none;
+            padding: 0.7rem;
+            border-radius: 6px;
+            font-size: 1.06rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.23s;
+            margin-bottom: 0.65rem;
+            min-width: 0;
+            box-sizing: border-box;
+            margin-top: 0.1rem;
+        }
+
+        form button:hover,
+        form button:focus {
+            background: linear-gradient(90deg, #55b957 60%, #379634 100%);
+            outline: none;
+        }
+
+        .extra-links {
+            margin-top: 0.3rem;
+            font-size: 0.89rem;
+            color: #666;
+            text-align: center;
+            width: 100%;
+            word-break: break-word;
+        }
+
+        .extra-links a {
+            color: #379634;
+            margin-left: 0.25rem;
+            text-decoration: none;
+            font-weight: 500;
+            word-break: break-word;
+        }
+        .extra-links a:hover,
+        .extra-links a:focus {
+            text-decoration: underline;
+            outline: none;
+        }
+        @media (max-width: 450px) {
+            main { padding: 1rem 0.2rem; max-width: 98vw; }
+            .form-fields { max-height: 38vh; }
+            h1.welcome-message { font-size: 1.05rem; }
+        }
+    </style>
+</head>
+<body>
+    <main role="main" aria-labelledby="register-heading">
+        <h1 id="register-heading" class="welcome-message" aria-live="polite">
+            Welcome, create an Account to get started!
+        </h1>
+        <form method="post" novalidate>
+            <h2>Register</h2>
+            {% csrf_token %}
+
+            {# Display non-field errors #}
+            {% if form.non_field_errors %}
+                <ul class="non-field-errors" role="alert" aria-live="assertive">
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <div class="form-fields">
+                {% for field in form %}
+                    <div class="field-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% for error in field.errors %}
+                            <div class="field-error">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" aria-label="Submit registration form">Register</button>
+
+            <p class="extra-links">
+                Already have an Account?
+                <a href="{% url 'login' %}">Sign In</a>
+            </p>
+        </form>
+    </main>
+</body>
+</html>

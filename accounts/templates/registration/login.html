@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: grid;
+            place-items: center;
+            background:
+                linear-gradient(135deg, rgba(34,139,34,0.27) 0%, rgba(144,238,144,0.25) 100%),
+                linear-gradient(rgba(255,255,255,0.60), rgba(255,255,255,0.55)),
+                url("https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1500&q=80") center/cover no-repeat;
+            /* Green rural field image with lighter overlays */
+        }
+        main {
+            width: 100%;
+            max-width: 370px;
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            background: rgba(255,255,255,0.97);
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.14);
+            text-align: center;
+        }
+        .typewriter {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #176a32;
+            letter-spacing: 1.5px;
+            text-shadow: 0 1px 0 #c2f0c2;
+        }
+        form h2 {
+            margin-bottom: 1.15rem;
+            font-weight: 600;
+            color: #24552c;
+        }
+        form p { margin: 0.75rem 0; text-align: left; }
+        form label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+            color: #3c5f3c;
+        }
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="password"] {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            margin-bottom: 1rem;
+            border: 1.5px solid #b3d9b3;
+            border-radius: 6px;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.90);
+            transition: border-color 0.3s;
+        }
+        form input[type="text"]:focus,
+        form input[type="email"]:focus,
+        form input[type="password"]:focus {
+            border-color: #388e3c;
+            outline: none;
+            box-shadow: 0 0 6px rgba(56,142,60,0.18);
+        }
+        form button {
+            width: 100%;
+            background: linear-gradient(90deg, #379634 60%, #55b957 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.23s;
+        }
+        form button:hover,
+        form button:focus {
+            background: linear-gradient(90deg, #55b957 60%, #379634 100%);
+            outline: none;
+        }
+        form p a {
+            color: #379634;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        form p a:hover,
+        form p a:focus {
+            text-decoration: underline;
+            outline: none;
+        }
+        .error-messages {
+            color: #d93025;
+            background-color: #fbe9e7;
+            border: 1.2px solid #d93025;
+            padding: 0.7rem 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            text-align: left;
+            font-size: 0.96rem;
+        }
+        .error-messages ul {
+            margin: 0;
+            padding-left: 1.15rem;
+        }
+        .extra-links {
+            margin-top: 1.1rem;
+            font-size: 0.97rem;
+            color: #666;
+        }
+        .extra-links a {
+            margin-left: 0.25rem;
+        }
+        .home-link {
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 0.93rem;
+            color: #888;
+        }
+        @media (max-width: 450px) {
+            main { padding: 1.25rem 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <main role="main" aria-labelledby="login-heading">
+        <h1 id="login-heading" class="typewriter" aria-live="polite">Welcome Back</h1>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <h2>Login</h2>
+
+            {% if form.errors %}
+                <div class="error-messages" role="alert" aria-live="assertive">
+                    <ul>
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {{ form.as_p }}
+
+            <button type="submit" aria-label="Submit login form">Login</button>
+
+            <p class="extra-links">
+                Don't have an account?
+                <a href="{% url 'register' %}">Register</a>
+                <br>
+                <a href="{% url 'password_reset' %}">Forgot password?</a>
+            </p>
+        </form>
+    </main>
+</body>
+</html>
