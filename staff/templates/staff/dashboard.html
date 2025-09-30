@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="mb-4">
+    <h2 class="mb-3">📊 Dashboard</h2>
+    <p class="text-muted">Welcome back, {{ user.username }}! Here’s what you can do:</p>
+  </div>
+
+  <div class="row">
+    <!-- Add Patient -->
+    <div class="col-md-4 mb-3">
+      <div class="card shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">➕ Add Patient</h5>
+          <p class="card-text text-muted">Register a new patient in the system.</p>
+          <a href="{% url 'add_patient' %}" class="btn btn-primary btn-sm">Add Patient</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- View Patients -->
+    <div class="col-md-4 mb-3">
+      <div class="card shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">👥 View Patients</h5>
+          <p class="card-text text-muted">Browse the list of registered patients.</p>
+          <a href="{% url 'list_patients' %}" class="btn btn-info btn-sm">View Patients</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Manage Account -->
+    <div class="col-md-4 mb-3">
+      <div class="card shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">⚙️ My Account</h5>
+          <p class="card-text text-muted">Update your profile or logout.</p>
+          <a href="{% url 'logout' %}" class="btn btn-outline-secondary btn-sm">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Optional Stats Section -->
+  <div class="mt-5">
+    <h4 class="mb-3">📈 Quick Stats</h4>
+    <p class="text-muted">You can add graphs or summary numbers here later (e.g., total patients, active cases, etc.).</p>
+  </div>
+{% endblock %}

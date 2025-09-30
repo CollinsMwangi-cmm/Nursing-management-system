@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="card-title mb-3">👩‍⚕️ Shift for {{ shift.nurse.user.get_full_name }}</h2>
+      <p class="text-muted">
+        🕒 {{ shift.start_time }} - {{ shift.end_time }} | 🏥 Ward: <strong>{{ shift.ward }}</strong>
+      </p>
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">📝 Tasks</h4>
+        <a href="{% url 'add_task' shift.id %}" class="btn btn-sm btn-primary">➕ Add Task</a>
+      </div>
+
+      {% if tasks %}
+        <ul class="list-group mb-4">
+          {% for task in tasks %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>{{ task.description }}</span>
+              {% if task.completed %}
+                <span class="badge badge-success">Completed</span>
+              {% else %}
+                <span class="badge badge-warning">Pending</span>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="text-muted">No tasks assigned.</p>
+      {% endif %}
+
+      <a href="{% url 'list_shifts' %}" class="btn btn-outline-secondary">← Back to Shifts</a>
+    </div>
+  </div>
+{% endblock %}

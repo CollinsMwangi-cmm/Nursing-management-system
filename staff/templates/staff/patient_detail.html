@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="card-title mb-4">🧾 Patient Details</h2>
+
+      <dl class="row">
+        <dt class="col-sm-3">Name:</dt>
+        <dd class="col-sm-9">{{ patient.user.get_full_name }}</dd>
+
+        <dt class="col-sm-3">Date of Birth:</dt>
+        <dd class="col-sm-9">{{ patient.date_of_birth }}</dd>
+
+        <dt class="col-sm-3">Phone:</dt>
+        <dd class="col-sm-9">{{ patient.phone }}</dd>
+
+        <dt class="col-sm-3">Email:</dt>
+        <dd class="col-sm-9">{{ patient.user.email }}</dd>
+
+        <dt class="col-sm-3">Address:</dt>
+        <dd class="col-sm-9">{{ patient.address }}</dd>
+      </dl>
+
+      <div class="mt-4">
+        <a href="{% url 'edit_patient' patient.pk %}" class="btn btn-warning">✏️ Edit</a>
+        <a href="{% url 'delete_patient' patient.pk %}" class="btn btn-danger">🗑️ Delete</a>
+        <a href="{% url 'list_patients' %}" class="btn btn-link">← Back to List</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="card shadow-sm border-danger">
+    <div class="card-body">
+      <h2 class="card-title text-danger mb-3">⚠️ Delete Record for {{ patient.user.get_full_name }}</h2>
+      <p class="mb-4">
+        Are you sure you want to delete this record? 
+        <span class="text-danger font-weight-bold">This action cannot be undone.</span>
+      </p>
+
+      <ul class="list-group mb-4">
+        <li class="list-group-item"><strong>Date:</strong> {{ record.date }}</li>
+        <li class="list-group-item"><strong>Diagnosis:</strong> {{ record.diagnosis }}</li>
+        <li class="list-group-item"><strong>Treatment:</strong> {{ record.treatment }}</li>
+        <li class="list-group-item"><strong>Notes:</strong> {{ record.notes }}</li>
+      </ul>
+
+      <form method="post" class="d-flex align-items-center">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger mr-3">🗑️ Yes, Delete</button>
+        <a href="{% url 'view_patient_records' patient.id %}" class="btn btn-outline-secondary">Cancel</a>
+      </form>
+    </div>
+  </div>
+{% endblock %}
