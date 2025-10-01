@@ -34,7 +34,7 @@ def signUp(request):
             )
             login(request, user)
             messages.success(request, 'Registration successful. Welcome!')
-            return redirect('challenge_list')  # Change to your desired redirect
+            return redirect('/')  # Change to your desired redirect
     else:
         form = UserRegistrationForm()
 

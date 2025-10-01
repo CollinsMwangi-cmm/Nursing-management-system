@@ -1,8 +1,9 @@
-# core/forms.py
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import UserProfile
+from .models import Appointment, UserProfile, UserProfile
+from django.contrib.auth.models import User
+
 
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -22,3 +23,19 @@ class UserRegistrationForm(UserCreationForm):
             role = self.cleaned_data['role']
             UserProfile.objects.create(user=user, role=role)
         return user
+
+
+
+class AppointmentForm(forms.ModelForm):
+    doctor = forms.ModelChoiceField(
+        queryset=User.objects.filter(userprofile__role='doctor'),
+        empty_label="Select Doctor"
+    )
+    appointment_date = forms.DateTimeField(
+        widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        label="Appointment Date & Time"
+    )
+
+    class Meta:
+        model = Appointment
+        fields = ['doctor', 'appointment_date', 'notes']

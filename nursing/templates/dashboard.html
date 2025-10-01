@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Welcome, {{ patient.first_name }} {{ patient.last_name }}</h1>
+    <h2>Your Appointments</h2>
+    <ul>
+        {% for appointment in appointments %}
+            <li>
+                {{ appointment.appointment_date }} with Dr. {{ appointment.doctor.get_full_name }} ({{ appointment.status }})
+            </li>
+        {% empty %}
+            <li>No appointments found.</li>
+        {% endfor %}
+    </ul>
+    <h2>Book a New Appointment</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Book Appointment</button>
+    </form>
+    <h2>Your Medical Reports</h2>
+    <ul>
+        {% for report in reports %}
+            <li>
+                {{ report.record_date }}: {{ report.description|truncatewords:10 }}
+                <a href="#">View Details</a>
+            </li>
+        {% empty %}
+            <li>No reports found.</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
