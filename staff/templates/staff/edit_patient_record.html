@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="card-title mb-4">✏️ Edit Record for {{ patient.user.get_full_name }}</h2>
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn btn-success">💾 Save Changes</button>
+        <a href="{% url 'view_patient_records' patient.id %}" class="btn btn-outline-secondary">
+          ← Back to Records
+        </a>
+      </form>
+    </div>
+  </div>
+
+  <style>
+    form p {
+      margin-bottom: 1rem;
+    }
+    form input, form select, form textarea {
+      width: 100%;
+      max-width: 600px;
+    }
+    .btn {
+      border-radius: 0.5rem;
+    }
+  </style>
+{% endblock %}
