@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}Doctor Dashboard{% endblock %}
+
+{% block extra_head %}
+<style>
+    main {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 2rem;
+        background-color: #ffffff;
+        border-radius: 8px;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: #2d5f8b;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #333;
+        border-bottom: 2px solid #e0e0e0;
+        padding-bottom: 0.5rem;
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 1rem;
+    }
+
+    ul li {
+        background-color: #f7f9fc;
+        margin-bottom: 0.5rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid #dce3ec;
+        border-radius: 5px;
+    }
+
+    form {
+        background-color: #f9f9f9;
+        padding: 1.5rem;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        margin-top: 1rem;
+    }
+
+    form p {
+        margin-bottom: 1rem;
+    }
+
+    button[type="submit"] {
+        background-color: #2d5f8b;
+        color: #fff;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        font-size: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #1f3f5f;
+    }
+
+    a {
+        color: #2d5f8b;
+        text-decoration: underline;
+        font-weight: 500;
+    }
+
+    a:hover {
+        color: #1f3f5f;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <h1>Welcome, Dr. {{ user.get_full_name }}</h1>
+
+    <h2 id="appointments">Appointments</h2>
+    <!-- List of appointments for this doctor -->
+    <ul>
+        {% for appointment in appointments %}
+            <li>
+                {{ appointment.date }} with {{ appointment.patient.get_full_name }} ({{ appointment.status }})
+            </li>
+        {% empty %}
+            <li>No appointments scheduled.</li>
+        {% endfor %}
+    </ul>
+
+    <h2 id="patients">Patients</h2>
+    <!-- List of patients assigned or searchable -->
+    <ul>
+        {% for patient in patients %}
+            <li>{{ patient.get_full_name }} - Age {{ patient.age }}</li>
+        {% empty %}
+            <li>No patients assigned.</li>
+        {% endfor %}
+    </ul>
+
+    <h2 id="reports">Reports</h2>
+    <!-- Reports section -->
+    <ul>
+        {% for report in reports %}
+            <li>
+                {{ report.date }} - {{ report.summary|truncatewords:10 }}
+                <a href="#">View</a>
+            </li>
+        {% empty %}
+            <li>No reports available.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

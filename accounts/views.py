@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django import forms
@@ -8,6 +9,28 @@ from django import forms
 from nursing.forms import UserRegistrationForm  # Your custom registration form
 from nursing.models import UserProfile  # Your Profile model
 
+
+def custom_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            # Check user role and redirect accordingly
+            user_profile = getattr(user, 'userprofile', None)
+            if user_profile:
+                if user_profile.role == 'patient':
+                    return redirect('dashboard')  # patient dashboard
+                elif user_profile.role == 'doctor':
+                    return redirect('doctor-dashboard')
+                elif user_profile.role == 'nurse':
+                    return redirect('nurse-dashboard')
+                elif user_profile.role == 'receptionist':
+                    return redirect('receptionist-dashboard')
+            return redirect('/')  # fallback
+    else:
+        form = AuthenticationForm()
+    return render(request, 'registration/login.html', {'form': form})
 
 class UserEditForm(forms.ModelForm):
     class Meta:
@@ -28,8 +51,6 @@ def signUp(request):
             # Create UserProfile with additional fields from form
             UserProfile.objects.create(
                 user=user,
-                location=form.cleaned_data.get('location', ''),
-                phone=form.cleaned_data.get('phone', ''),
                 role=form.cleaned_data.get('role')
             )
             login(request, user)

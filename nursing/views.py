@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Patient, Appointment, MedicalRecord, UserProfile
 from django.contrib.auth.models import User
 from .forms import AppointmentForm
+from django.contrib import messages
 
 def home(request):
     return render(request, 'base.html', {'title': 'Home'})
@@ -20,16 +21,20 @@ def patient_dashboard(request):
             appointments = Appointment.objects.filter(patient=patient).order_by('-appointment_date')
             reports = MedicalRecord.objects.filter(patient=patient).order_by('-record_date')
         except Patient.DoesNotExist:
-            pass
+            patient = None
 
-    # Appointment booking logic
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
         if form.is_valid():
             appointment = form.save(commit=False)
-            appointment.patient = patient
-            appointment.save()
-            return redirect('patient-dashboard')
+            if patient is not None:
+                appointment.patient = patient  # THIS IS REQUIRED!
+                appointment.save()
+                return redirect('dashboard')
+            else:
+                # Patient record not found; handle error
+                messages.error(request, "Patient record not found. Please contact admin.")
+                return redirect('dashboard')
     else:
         form = AppointmentForm()
 
@@ -39,3 +44,18 @@ def patient_dashboard(request):
         'reports': reports,
         'form': form,
     })
+    
+@login_required
+def doctor_dashboard(request):
+    # Doctor-specific dashboard
+    return render(request, 'doctor_dashboard.html')
+
+@login_required
+def nurse_dashboard(request):
+    # Nurse-specific dashboard
+    return render(request, 'nurse_dashboard.html')
+
+@login_required
+def receptionist_dashboard(request):
+    # Receptionist-specific dashboard
+    return render(request, 'receptionist_dashboard.html')

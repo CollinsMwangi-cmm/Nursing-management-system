@@ -1,294 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}HAPPY CARE NURSING{% endblock %}</title>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Nursing Management System{% endblock %}</title>
+
     <style>
-        /* Reset */
+        /* Reset default styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-    
-        /* Colors for nursing/medical theme */
-        :root {
-            --primary: #2E86C1;   /* calming medical blue */
-            --secondary: #28B463; /* health green */
-            --light: #f4f9ff;
-            --dark: #1a3d5d;
+
+        main {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 8px;
         }
-    
-        body {
-            font-family: Arial, sans-serif;
-            background: var(--light);
-            color: var(--dark);
-            display: flex;
-            min-height: 100vh;
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #2d5f8b;
         }
-    
-        /* Header */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 60px;
-            width: 100%;
-            background: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            z-index: 1000;
+        
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 0.5rem;
         }
-    
-        .header .logo {
-            font-size: 1.3rem;
-            font-weight: bold;
+        
+        ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 1rem;
         }
-    
-        .header .nav-links a {
-            color: white;
-            margin: 0 10px;
-            text-decoration: none;
+        
+        ul li {
+            background-color: #f7f9fc;
+            margin-bottom: 0.5rem;
+            padding: 0.75rem 1rem;
+            border: 1px solid #dce3ec;
+            border-radius: 5px;
+        }
+        
+        form {
+            background-color: #f9f9f9;
+            padding: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-top: 1rem;
+        }
+        
+        form p {
+            margin-bottom: 1rem;
+        }
+        
+        button[type="submit"] {
+            background-color: #2d5f8b;
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #1f3f5f;
+        }
+        
+        a {
+            color: #2d5f8b;
+            text-decoration: underline;
             font-weight: 500;
         }
-    
-        .header .nav-links a:hover {
-            text-decoration: underline;
+        
+        a:hover {
+            color: #1f3f5f;
         }
-    
-        .search-form {
+        
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
             display: flex;
-        }
-    
-        .search-form input {
-            padding: 5px;
-            border-radius: 5px 0 0 5px;
-            border: none;
-            outline: none;
-        }
-    
-        .search-form button {
-            padding: 5px 10px;
-            background: var(--secondary);
-            border: none;
-            color: white;
-            cursor: pointer;
-            border-radius: 0 5px 5px 0;
-        }
-    
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            top: 60px; /* below header */
-            left: 0;
-            width: 220px;
-            height: 100%;
-            background: var(--dark);
-            padding-top: 20px;
-        }
-    
-        .sidebar ul {
-            list-style: none;
-        }
-    
-        .sidebar ul li {
-            margin: 15px 0;
-        }
-    
-        .sidebar ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            display: block;
-            transition: background 0.3s, border-left 0.3s;
-        }
-    
-        .sidebar ul li a:hover {
-            background: var(--primary);
-            border-left: 5px solid var(--secondary);
-        }
-    
-        /* Main Content (when logged in) */
-        .main-content {
-            margin-top: 60px;   /* below header */
-            margin-left: 220px; /* next to sidebar */
-            padding: 20px;
-            flex: 1;
+            flex-direction: column;
             min-height: 100vh;
-            background: var(--light);
         }
-    
-        /* Auth Wrapper (login/register screens) */
-        .auth-wrapper {
-            margin: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            padding: 2rem;
-        }
-    
-        .auth-container {
-            width: 100%;
-            max-width: 400px;
-            padding: 2rem 1.5rem 1.5rem;
-            background: rgba(255,255,255,0.97);
-            border-radius: 12px;
-            box-shadow: 0 4px 25px rgba(0,0,0,0.14);
+
+        header {
+            background-color: #2d5f8b;
+            padding: 1rem 2rem;
+            color: #ffffff;
             text-align: center;
-        }
-    
-        .auth-container h1 {
-            margin-bottom: 20px;
-            color: var(--primary);
-        }
-    
-        .auth-container h2 {
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-    
-        /* Auth Form Fields */
-        .form-fields p {
-            margin-bottom: 20px; /* space between fields */
-            text-align: left;
-        }
-    
-        .form-fields label {
+            font-size: 1.8rem;
             font-weight: bold;
-            display: block;
-            margin-bottom: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-    
-        .form-fields input, 
-        .form-fields select, 
-        .form-fields textarea {
-            width: 100%;
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            margin-bottom: 12px;
-            transition: border-color 0.3s, box-shadow 0.3s;
+
+        .container {
+            display: flex;
+            flex: 1;
         }
-    
-        .form-fields input:focus, 
-        .form-fields select:focus, 
-        .form-fields textarea:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 6px rgba(46,134,193,0.4);
+
+        aside {
+            background-color: #2d5f8b;
+            padding: 2rem 1rem;
+            width: 220px;
+            min-height: calc(100vh - 70px); /* minus header height */
         }
-    
-        .error-messages {
-            background: #ffebee;
-            color: #c62828;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            text-align: left;
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
-    
-        .extra-links {
-            margin-top: 15px;
-            text-align: center;
-        }
-    
-        .extra-links a {
-            color: var(--primary);
+
+        nav a {
+            color: #ffffff;
             text-decoration: none;
-            margin: 0 5px;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s ease, color 0.3s ease;
         }
-    
-        .extra-links a:hover {
-            text-decoration: underline;
+
+        nav a:hover {
+            background-color: #ffffff;
+            color: #2d5f8b;
         }
-    
-        /* Buttons */
-        .btn {
-            background: var(--primary);
-            color: white;
-            padding: 10px 18px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.3s;
-            font-size: 1rem;
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-left: 1px solid #ddd;
         }
-    
-        .btn:hover {
-            background: var(--secondary);
-        }
-    
-        /* Tables */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-    
-        table th, table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-    
-        table th {
-            background: var(--primary);
-            color: white;
-        }
-    
-        table tr:hover {
-            background: #eef6ff;
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            aside {
+                width: 100%;
+                min-height: auto;
+            }
+
+            main {
+                border-left: none;
+            }
+
+            nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
         }
     </style>
-    
 </head>
 <body>
-    {% if user.is_authenticated %}
-        <!-- Header/Navbar -->
-        <header class="header">
-            <div class="logo">HAPPY CARE NURSING</div>
-            <nav class="nav-links">
-                <a href="#">Home</a>
-                <a href="{% url 'list_patients' %}">Patients</a>
-                <a href="#">Nurses</a>
-                <a href="#">Doctors</a>
-            </nav>
-            <form class="search-form">
-                <input type="text" placeholder="Search...">
-                <button type="submit">🔍</button>
-            </form>
-        </header>
+    <header>
+        Happy Care Nursing
+    </header>
 
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <ul>
-                <li><a href="#">🏠 Dashboard</a></li>
-                <li><a href="#">🩺 Appointments</a></li>
-                <li><a href="#">💊 Medications</a></li>
-                <li><a href="#">📋 Reports</a></li>
-                <li><a href="#">⚙️ Settings</a></li>
-            </ul>
+    <div class="container">
+        <aside>
+            <nav>
+                {% if user.is_authenticated and user.userprofile %}
+                    {% if user.userprofile.role == 'patient' %}
+                        <a href="{% url 'dashboard' %}">Dashboard</a>
+                        <a href="{% url 'dashboard' %}#appointments">Appointments</a>
+                        <a href="{% url 'dashboard' %}#medications">Medications</a>
+                        <a href="{% url 'dashboard' %}#reports">Reports</a>
+                    {% elif user.userprofile.role == 'doctor' %}
+                        <a href="{% url 'doctor-dashboard' %}">Dashboard</a>
+                        <a href="{% url 'doctor-dashboard' %}#appointments">Appointments</a>
+                        <a href="{% url 'doctor-dashboard' %}#patients">Patients</a>
+                        <a href="{% url 'doctor-dashboard' %}#reports">Reports</a>
+                    {% elif user.userprofile.role == 'nurse' %}
+                        <a href="{% url 'nurse-dashboard' %}">Dashboard</a>
+                        <a href="{% url 'nurse-dashboard' %}#shifts">Shifts</a>
+                        <a href="{% url 'nurse-dashboard' %}#patients">Patients</a>
+                    {% elif user.userprofile.role == 'receptionist' %}
+                        <a href="{% url 'receptionist-dashboard' %}">Dashboard</a>
+                        <a href="{% url 'receptionist-dashboard' %}#appointments">Appointments</a>
+                        <a href="{% url 'receptionist-dashboard' %}#patients">Patients</a>
+                    {% endif %}
+                    <a href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Login</a>
+                    <a href="{% url 'register' %}">Register</a>
+                {% endif %}
+            </nav>
         </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
+        <main>
             {% block content %}{% endblock %}
         </main>
-    {% else %}
-        <!-- Auth Pages Content -->
-        <div class="auth-wrapper">
-            <div class="auth-container">
-                {% block auth_content %}{% endblock %}
-            </div>
-        </div>
-    {% endif %}
+    </div>
 </body>
 </html>

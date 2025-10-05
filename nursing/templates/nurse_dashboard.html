@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %}Nurse Dashboard{% endblock %}
+
+{% block extra_head %}
+<style>
+    main {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 2rem;
+        background-color: #ffffff;
+        border-radius: 8px;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: #2d5f8b;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #333;
+        border-bottom: 2px solid #e0e0e0;
+        padding-bottom: 0.5rem;
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 1rem;
+    }
+
+    ul li {
+        background-color: #f7f9fc;
+        margin-bottom: 0.5rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid #dce3ec;
+        border-radius: 5px;
+    }
+
+    a {
+        color: #2d5f8b;
+        text-decoration: underline;
+        font-weight: 500;
+    }
+
+    a:hover {
+        color: #1f3f5f;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <h1>Welcome, Nurse {{ user.get_full_name }}</h1>
+
+    <h2 id="shifts">My Shifts</h2>
+    <ul>
+        {% for shift in shifts %}
+            <li>{{ shift.date }} - {{ shift.start_time }} to {{ shift.end_time }}</li>
+        {% empty %}
+            <li>No upcoming shifts.</li>
+        {% endfor %}
+    </ul>
+
+    <h2 id="patients">Patients</h2>
+    <ul>
+        {% for patient in patients %}
+            <li>{{ patient.get_full_name }} - Room {{ patient.room_number }}</li>
+        {% empty %}
+            <li>No assigned patients.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

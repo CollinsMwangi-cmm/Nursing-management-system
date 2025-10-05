@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Appointment, UserProfile, UserProfile
+from .models import Appointment, UserProfile
 from django.contrib.auth.models import User
 
 

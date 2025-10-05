@@ -1,4 +1,4 @@
-# nursing/signals.py
+'''# nursing/signals.py
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
@@ -15,4 +15,4 @@ def save_user_profile(sender, instance, **kwargs):
         instance.userprofile.save()
     except UserProfile.DoesNotExist:
         # Create profile if missing
-        UserProfile.objects.create(user=instance, role='patient')
+        UserProfile.objects.create(user=instance, role='patient')'''
