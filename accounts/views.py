@@ -48,17 +48,20 @@ def signUp(request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # Create UserProfile with additional fields from form
-            UserProfile.objects.create(
-                user=user,
-                role=form.cleaned_data.get('role')
-            )
+            role = form.cleaned_data['role']
+            if role == 'patient':
+                # Create Patient record for this user
+                Patient.objects.create(
+                    first_name=user.first_name,
+                    last_name=user.last_name,
+                    email=user.email,
+                    # Add other required fields as needed
+                )
             login(request, user)
             messages.success(request, 'Registration successful. Welcome!')
-            return redirect('/')  # Change to your desired redirect
+            return redirect('/')
     else:
         form = UserRegistrationForm()
-
     context = {
         'form': form,
         'title': 'Register'

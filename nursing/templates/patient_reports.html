@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Your Medical Reports</h2>
+    <ul>
+        {% for report in reports %}
+            <li>
+                {{ report.record_date }}: {{ report.description|truncatewords:10 }}
+                <a href="#">View Details</a>
+            </li>
+        {% empty %}
+            <li>No reports found.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

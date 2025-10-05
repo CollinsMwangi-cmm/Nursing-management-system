@@ -1,34 +1,11 @@
 {% extends 'base.html' %}
-{% block title %}Patient Dashboard{% endblock %}
 {% block content %}
-    <h1>Welcome, {{ patient.first_name }} {{ patient.last_name }}</h1>
-    <h2>Your Appointments</h2>
+    
+    <h1>Welcome, {{ patient.first_name|default:user.first_name }} {{ patient.last_name|default:user.last_name|default:user.username }}</h1>
     <ul>
-        {% for appointment in appointments %}
-            <li>
-                {{ appointment.appointment_date }} with Dr. {{ appointment.doctor.get_full_name }} ({{ appointment.status }})
-            </li>
-        {% empty %}
-            <li>No appointments found.</li>
-        {% endfor %}
-    </ul>
-    <h2 id="appointments">Book a New Appointment</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Book Appointment</button>
-    </form>
-    <h2 id="medications">Your Medications</h2>
-    <!-- Medication listing here if available -->
-    <h2 id="reports">Your Medical Reports</h2>
-    <ul>
-        {% for report in reports %}
-            <li>
-                {{ report.record_date }}: {{ report.description|truncatewords:10 }}
-                <a href="#">View Details</a>
-            </li>
-        {% empty %}
-            <li>No reports found.</li>
-        {% endfor %}
+        <li><a href="{% url 'book-appointment' %}">Book an Appointment</a></li>
+        <li><a href="{% url 'patient-appointments' %}">View Appointments</a></li>
+        <li><a href="{% url 'patient-medications' %}">View Medications</a></li>
+        <li><a href="{% url 'patient-reports' %}">View Reports</a></li>
     </ul>
 {% endblock %}

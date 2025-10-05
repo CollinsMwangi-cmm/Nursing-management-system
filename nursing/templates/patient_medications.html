@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Your Medications</h2>
+    <ul>
+        {% for medication in medications %}
+            <li>
+                {{ medication.name }} prescribed by Dr. {{ medication.prescribed_by.get_full_name }} on {{ medication.date_prescribed }}
+            </li>
+        {% empty %}
+            <li>No medications found.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
