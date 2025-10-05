@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django import forms
 
 from nursing.forms import UserRegistrationForm  # Your custom registration form
-from nursing.models import UserProfile  # Your Profile model
+from nursing.models import UserProfile, Patient  # Your Profile model
 
 
 def custom_login(request):
@@ -52,8 +52,8 @@ def signUp(request):
             if role == 'patient':
                 # Create Patient record for this user
                 Patient.objects.create(
-                    first_name=user.first_name,
-                    last_name=user.last_name,
+                    first_name=user.first_name or user.username,
+                    last_name=user.last_name or '',
                     email=user.email,
                     # Add other required fields as needed
                 )

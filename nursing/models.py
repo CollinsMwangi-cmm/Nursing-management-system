@@ -17,13 +17,13 @@ class UserProfile(models.Model):
 
 class Patient(models.Model):
     GENDER_CHOICES = [('M', 'Male'), ('F', 'Female'), ('O', 'Other')]
-
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    date_of_birth = models.DateField()
+    date_of_birth = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    address = models.TextField()
-    phone_number = models.CharField(max_length=15)
+    address = models.TextField(null=False, blank=False)
+    phone_number = models.CharField(max_length=15, null=False, blank=False)
     email = models.EmailField(blank=True, null=True)
     emergency_contact = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
