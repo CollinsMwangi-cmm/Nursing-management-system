@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     
-    <h1>Welcome, {{ patient.first_name|default:user.first_name }} {{ patient.last_name|default:user.last_name|default:user.username }}</h1>
+    <h1>Welcome, {{ patient.first_name|default:user.first_name }} </h1>
     <ul>
         <li><a href="{% url 'book-appointment' %}">Book an Appointment</a></li>
         <li><a href="{% url 'patient-appointments' %}">View Appointments</a></li>
